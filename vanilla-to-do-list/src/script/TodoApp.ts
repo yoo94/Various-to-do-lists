@@ -14,9 +14,22 @@ export class TodoApp {
     dragDrop: DragDrop | null;
     toDoListId: string;
     container: HTMLElement;
+    input: HTMLInputElement;
+    todoList: HTMLUListElement;
+    allButton: HTMLButtonElement;
+    activeButton: HTMLButtonElement;
+    completedButton: HTMLButtonElement;
+    clearCompletedButton: HTMLButtonElement;
 
     constructor(containerId: string, options: TodoAppOptions = {}) {
         this.toDoListId = containerId;
+        this.container = document.getElementById(containerId) as HTMLElement;
+        this.input = this.container.querySelector('.new-todo') as HTMLInputElement;
+        this.todoList = this.container.querySelector('.todo-list') as HTMLUListElement;
+        this.allButton = this.container.querySelector(`#all-${this.toDoListId}`) as HTMLButtonElement;
+        this.activeButton = this.container.querySelector(`#active-${this.toDoListId}`) as HTMLButtonElement;
+        this.completedButton = this.container.querySelector(`#completed-${this.toDoListId}`) as HTMLButtonElement;
+        this.clearCompletedButton = this.container.querySelector('.clear-completed') as HTMLButtonElement;
         this.allTodos = [];
         this.activeTodos = [];
         this.completedTodos = [];
@@ -152,37 +165,16 @@ export class TodoApp {
     }
 
     bindEvents() {
-        document.getElementById(`new-todo-${this.toDoListId}`)?.addEventListener('keypress', (event: KeyboardEvent) => {
-            if (event.key === 'Enter') {
-                const input = event.target as HTMLInputElement;
-                if (input.value.trim() !== '') {
-                    this.createTodo(input.value);
-                    input.value = '';
-                }
+        this.input.addEventListener('keypress', (event: KeyboardEvent) => {
+            if (event.key === 'Enter' && this.input.value.trim() !== '') {
+                this.createTodo(this.input.value);
+                this.input.value = '';
             }
         });
-        document.getElementById(`all-${this.toDoListId}`)?.addEventListener('click', () => {
-            document.querySelectorAll(`.todo-app-${this.toDoListId} .action-button`).forEach(btn => btn.classList.remove('push'));
-            document.getElementById(`all-${this.toDoListId}`)?.classList.add('push');
-            this.filter = 'all';
-            this.initRender();
-        });
 
-        document.getElementById(`active-${this.toDoListId}`)?.addEventListener('click', () => {
-            document.querySelectorAll(`.todo-app-${this.toDoListId} .action-button`).forEach(btn => btn.classList.remove('push'));
-            document.getElementById(`active-${this.toDoListId}`)?.classList.add('push');
-            this.filter = 'active';
-            this.initRender();
-        });
-
-        document.getElementById(`completed-${this.toDoListId}`)?.addEventListener('click', () => {
-            document.querySelectorAll(`.todo-app-${this.toDoListId} .action-button`).forEach(btn => btn.classList.remove('push'));
-            document.getElementById(`completed-${this.toDoListId}`)?.classList.add('push');
-            this.filter = 'completed';
-            this.initRender();
-        });
-
-        document.getElementById(`clear-completed-${this.toDoListId}`)?.addEventListener('click', this.deleteCompletedTodo);
-
+        this.allButton.addEventListener('click', () => this.filter = 'all');
+        this.activeButton.addEventListener('click', () => this.filter = 'active');
+        this.completedButton.addEventListener('click', () => this.filter = 'completed');
+        this.clearCompletedButton.addEventListener('click', this.deleteCompletedTodo);
     }
 }
