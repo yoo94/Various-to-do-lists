@@ -1,0 +1,20 @@
+.todo.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo.editing > * {
+  display: none;
+}
+
+.todo.editing .todo-edit-input {
+  display: block;
+}
+
+.todo-edit-input {
+  display: none;
+}
+
+#todo-list[data-filter="active"] .todo.completed {
+  display: none;
+}

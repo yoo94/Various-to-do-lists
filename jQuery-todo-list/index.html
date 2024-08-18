@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todolist + jQuery</title>
+    <script type="module" src="/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <input id="todo-input" type="text" placeholder="할일을 입력해주세요."/>
+
+      <ol id="todo-list" data-filter="all"></ol>
+
+      <div>남은 할일 <span id="num-reminded-todos">0</span></div>
+
+      <hr/>
+
+      <div>
+          <button id="btn-show-all">전체보기</button>
+          <button id="btn-show-active">해야 할 일</button>
+      </div>
+      <div>
+        <button id="btn-toggle-all">전체완료토글</button>
+        <button id="btn-clear-completed">완료된 할일 삭제</button>
+    </div>
+  </body>
+</html>
