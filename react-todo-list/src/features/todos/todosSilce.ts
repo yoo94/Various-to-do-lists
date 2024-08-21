@@ -5,7 +5,7 @@ import { Todo } from '../../types/Todo'
 export const todosSlice = createSlice({
   name: 'visibilityFilter',
   // `createSlice` will infer the state type from the `initialState` argument
-  initialState: JSON.parse(localStorage.getItem("react-todos") || '[]') as Todo[],
+  initialState: [] as Todo[],
   reducers: {
     _completeTodoToggle: (todos, action) => {
       const target = action.payload;

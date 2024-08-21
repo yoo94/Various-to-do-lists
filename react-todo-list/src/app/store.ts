@@ -1,11 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import visibilityFilterSlice from '../features/visibilityFilter/visibilityFilterSlice'
 import todosSlice from '../features/todos/todosSilce'
+import logger from "redux-logger"
+import { localStorageMiddleware, preloadlocalStorage } from '../features/middleware/localStorageMiddleware'
+
 
 const store = configureStore({
   reducer: {
     visibilityFilter: visibilityFilterSlice,
     todos: todosSlice
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger, localStorageMiddleware),
+  preloadedState: {
+    todos: preloadlocalStorage
   }
 })
 
