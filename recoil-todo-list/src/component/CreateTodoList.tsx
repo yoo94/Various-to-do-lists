@@ -1,12 +1,8 @@
-import { Dispatch, SetStateAction } from "react"
-import { Todo } from "../types/Todo"
+import { useRecoilState } from "recoil";
+import { todosState } from "../recoil/atoms/todoState";
 
-interface CreateTodoListProps {
-  todos: Todo[]
-  setTodos: Dispatch<SetStateAction<Todo[]>>
-}
-
-const CreateTodoList = ({ todos, setTodos }: CreateTodoListProps) => {
+const CreateTodoList = () => {
+  const [todos, setTodos] = useRecoilState(todosState);
   const createTodo = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.nativeEvent.isComposing) return
     if (event.key === "Enter") {

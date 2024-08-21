@@ -1,11 +1,8 @@
-import { useMemo } from "react";
-import { Todo } from "../types/Todo";
+import { useRecoilValue } from "recoil";
+import { remainingTodosvalue } from "../recoil/selectors/remainingTodosValue";
 
-interface RemainingTodosProps {
-  todos: Todo[];
-}
-const RemainingTodos = ({ todos }: RemainingTodosProps) => {
-  const numberRemainingTodos = useMemo(() => todos.filter(todo => !todo.completed).length, [todos])
+const RemainingTodos = () => {
+  const numberRemainingTodos = useRecoilValue(remainingTodosvalue)
   return (
     <>
       <div>남은 할일: {numberRemainingTodos}</div>

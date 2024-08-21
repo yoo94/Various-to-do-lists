@@ -1,13 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
 import { Todo } from "../types/Todo";
 import TodoItem from "./TodoItem";
+import { todosState } from "../recoil/atoms/todoState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { visibilityFilterState } from "../recoil/atoms/visibilityFilter";
 
-interface TodoListProps {
-  visibleFilter: string
-  todos: Todo[]
-  setTodos: Dispatch<SetStateAction<Todo[]>>
-}
-const TodoList = ({ visibleFilter, todos, setTodos }: TodoListProps) => {
+
+const TodoList = () => {
+  const [todos, setTodos] = useRecoilState(todosState);
+  const visibleFilter = useRecoilValue(visibilityFilterState);
+
   const filterTodo = (() => {
     switch (visibleFilter) {
       case 'All': return todos;

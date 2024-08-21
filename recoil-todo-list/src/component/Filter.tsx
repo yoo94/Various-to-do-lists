@@ -1,12 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
 import Button from "./Button";
+import { useRecoilState } from "recoil";
+import { visibilityFilterState } from "../recoil/atoms/visibilityFilter";
 
-interface FilterProps {
-  visibleFilter: string;
-  setVisibleFilter: Dispatch<SetStateAction<string>>;
-}
-
-const Filter = ({ visibleFilter, setVisibleFilter }: FilterProps) => {
+const Filter = () => {
+  const [visibleFilter, setVisibleFilter] = useRecoilState(visibilityFilterState);
   const allFilter = () => {
     setVisibleFilter('All');
   }

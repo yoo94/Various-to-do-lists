@@ -1,13 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { useRecoilState } from "recoil";
 import Button from "./Button";
-import { Todo } from './types/Todo';
+import { todosState } from "../recoil/atoms/todoState";
 
-interface FooterProps {
-  todos: Todo[],
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
-}
-
-const Footer = ({ todos, setTodos }: FooterProps) => {
+const Footer = () => {
+  const [todos, setTodos] = useRecoilState(todosState);
   const allCompletedToggle = () => {
     const allChecked = todos.every(todo => todo.completed);
     setTodos(todos.map(todo => ({ ...todo, completed: !allChecked })))
