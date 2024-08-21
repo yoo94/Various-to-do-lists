@@ -1,14 +1,25 @@
-import { useAppDispatch } from "../app/hooks"
-import { _createTodo } from "../features/todos/todosSilce"
+import { Dispatch, SetStateAction } from "react"
+import { Todo } from "../types/Todo"
 
+interface CreateTodoListProps {
+  todos: Todo[]
+  setTodos: Dispatch<SetStateAction<Todo[]>>
+}
 
-const CreateTodoList = () => {
-  const CreateTodoDispatch = useAppDispatch()
+const CreateTodoList = ({ todos, setTodos }: CreateTodoListProps) => {
   const createTodo = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.nativeEvent.isComposing) return
     if (event.key === "Enter") {
-      CreateTodoDispatch(_createTodo(event.currentTarget.value))
-      event.currentTarget.value = ''
+
+      // 불변성을 지키기 위한 새로운 JS 표준변수를 기억하자.
+      const id = todos.length + 1
+      const title = event.currentTarget.value;
+      const completed = false
+
+      const newTodo = { id, title, completed }
+      setTodos([...todos, newTodo])
+
+      event.currentTarget.value = ""
     }
   }
   return (

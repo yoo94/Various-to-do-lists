@@ -1,12 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
 import { Todo } from "../types/Todo";
 import TodoItem from "./TodoItem";
-import { useAppSelector } from "../app/hooks";
 
-
-const TodoList = () => {
-  const { visibilityFilter, todos } = useAppSelector(state => state);
+interface TodoListProps {
+  visibleFilter: string
+  todos: Todo[]
+  setTodos: Dispatch<SetStateAction<Todo[]>>
+}
+const TodoList = ({ visibleFilter, todos, setTodos }: TodoListProps) => {
   const filterTodo = (() => {
-    switch (visibilityFilter) {
+    switch (visibleFilter) {
       case 'All': return todos;
       case 'Active': return todos.filter(todo => !todo.completed);
       case 'Completed': return todos.filter(todo => todo.completed);
@@ -16,7 +19,7 @@ const TodoList = () => {
   return (
     <ol>
       {filterTodo.map((todo: Todo) =>
-        <TodoItem todoItem={todo} />
+        <TodoItem todoItem={todo} todos={todos} setTodos={setTodos} />
       )}
     </ol>
   )

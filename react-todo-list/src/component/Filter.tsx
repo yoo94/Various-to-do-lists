@@ -1,20 +1,20 @@
+import { Dispatch, SetStateAction } from "react";
 import Button from "./Button";
-import { useAppSelector } from "../app/hooks";
-import { useDispatch } from "react-redux";
-import { viewActive, viewAll, viewCompleted } from "../features/visibilityFilter/visibilityFilterSlice";
 
+interface FilterProps {
+  visibleFilter: string;
+  setVisibleFilter: Dispatch<SetStateAction<string>>;
+}
 
-const Filter = () => {
-  const visibleFilter = useAppSelector(state => state.visibilityFilter);
-  const filterDispatch = useDispatch()
+const Filter = ({ visibleFilter, setVisibleFilter }: FilterProps) => {
   const allFilter = () => {
-    filterDispatch(viewAll())
+    setVisibleFilter('All');
   }
   const activeFilter = () => {
-    filterDispatch(viewActive())
+    setVisibleFilter('Active');
   }
   const completedFilter = () => {
-    filterDispatch(viewCompleted())
+    setVisibleFilter('Completed');
   }
   return (
     <>

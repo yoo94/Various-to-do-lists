@@ -1,23 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Todo } from "../types/Todo";
 import Button from "./Button";
-import { useAppDispatch } from "../app/hooks";
-import { _completeTodoToggle, _deleteTodo, _updateTodoTitle } from "../features/todos/todosSilce";
 
 interface TodoItemProps {
   todoItem: Todo
+  todos: Todo[]
+  setTodos: Dispatch<SetStateAction<Todo[]>>
+
 }
-const TodoItem = ({ todoItem }: TodoItemProps) => {
+const TodoItem = ({ todoItem, todos, setTodos }: TodoItemProps) => {
+
   const editingInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [editingTodoTitle, setEditingTodoTitle] = useState<string>("");
 
-  const todoItemDispatch = useAppDispatch();
+  const completeTodoToggle = (target: Todo) => {
+    setTodos(todos.map(todo => todo == target ? { ...todo, completed: !todo.completed } : todo));
+  };
 
-
-  const completeTodoToggle = (target: Todo) => todoItemDispatch(_completeTodoToggle(target))
-
-  const deleteTodo = (target: Todo) => todoItemDispatch(_deleteTodo(target))
+  const deleteTodo = (target: Todo) => {
+    setTodos(todos.filter((todo) => todo !== target));
+  };
 
   const updateTodo = (target: Todo): void => {
     setEditingTodo(target)
@@ -29,11 +32,10 @@ const TodoItem = ({ todoItem }: TodoItemProps) => {
   };
 
   const updateTodoTitle = (event: React.KeyboardEvent<HTMLInputElement>, target: Todo) => {
-
     if (event.nativeEvent.isComposing) return
     if (event.key === "Enter") {
       const title: string = event.currentTarget.value
-      todoItemDispatch(_updateTodoTitle({ target, title }))
+      setTodos(todos.map((todo) => todo === target ? { ...todo, title } : todo))
       setEditingTodo(null)
     }
   };
