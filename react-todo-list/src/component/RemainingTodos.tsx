@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import { Todo } from "../types/Todo";
+import { useAppSelector } from "../app/hooks";
 
-interface RemainingTodosProps {
-  todos: Todo[];
-}
-const RemainingTodos = ({ todos }: RemainingTodosProps) => {
+
+const RemainingTodos = () => {
+  const todos = useAppSelector(state => state.todos)
   const numberRemainingTodos = useMemo(() => todos.filter(todo => !todo.completed).length, [todos])
   return (
     <>

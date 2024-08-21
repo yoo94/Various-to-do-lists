@@ -10,7 +10,6 @@ import CreateTodoList from './component/CreateTodoList'
 
 function App(): JSX.Element {
   const [todos, setTodos] = useState<Todo[]>(JSON.parse(localStorage.getItem("react-todos") || '[]'))
-  const [visibleFilter, setVisibleFilter] = useState("All")
   useEffect(() => {
     localStorage.setItem("react-todos", JSON.stringify(todos))
   }, [todos])
@@ -18,10 +17,10 @@ function App(): JSX.Element {
   return (
     <>
       <CreateTodoList todos={todos} setTodos={setTodos} />
-      <TodoList visibleFilter={visibleFilter} todos={todos} setTodos={setTodos} />
-      <RemainingTodos todos={todos} />
+      <TodoList />
+      <RemainingTodos />
       <hr />
-      <Filter visibleFilter={visibleFilter} setVisibleFilter={setVisibleFilter} />
+      <Filter />
       <hr />
       <Footer todos={todos} setTodos={setTodos} />
     </>
