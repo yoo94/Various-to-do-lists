@@ -10,4 +10,4 @@
 
 ### 3. Vue
 
-### 4.React (상태관리를 Redux,Recoil,ReactQuery를 사용하여 3개의 todo list 만들 예정)
+### 4.React (기본 react + 상태관리를 Redux,Recoil 사용하여 3개의 todo list 만들 예정)
