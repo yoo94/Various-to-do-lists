@@ -1,27 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
 import { Todo } from "../types/Todo";
 import TodoItem from "./TodoItem";
-import { todosState } from "../recoil/atoms/todoState";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { visibilityFilterState } from "../recoil/atoms/visibilityFilter";
+import { useRecoilValue } from "recoil";
+import { FilterValues } from "../recoil/selectors/FilterValue";
 
 
 const TodoList = () => {
-  const [todos, setTodos] = useRecoilState(todosState);
-  const visibleFilter = useRecoilValue(visibilityFilterState);
-
-  const filterTodo = (() => {
-    switch (visibleFilter) {
-      case 'All': return todos;
-      case 'Active': return todos.filter(todo => !todo.completed);
-      case 'Completed': return todos.filter(todo => todo.completed);
-    }
-    return todos;
-  })()
+  const filterTodo = useRecoilValue(FilterValues)
   return (
     <ol>
       {filterTodo.map((todo: Todo) =>
-        <TodoItem todoItem={todo} todos={todos} setTodos={setTodos} />
+        <TodoItem key={todo.id} todoItem={todo} />
       )}
     </ol>
   )

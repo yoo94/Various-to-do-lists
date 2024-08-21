@@ -1,6 +1,6 @@
 import Button from "./Button";
 import { useRecoilState } from "recoil";
-import { visibilityFilterState } from "../recoil/atoms/visibilityFilter";
+import { visibilityFilterState } from "../recoil/atoms/visibilityFilterState";
 
 const Filter = () => {
   const [visibleFilter, setVisibleFilter] = useRecoilState(visibilityFilterState);

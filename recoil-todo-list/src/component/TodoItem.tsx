@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Todo } from "../types/Todo";
 import Button from "./Button";
+import { useRecoilState } from "recoil";
+import { todosState } from "../recoil/atoms/todoState";
 
 interface TodoItemProps {
   todoItem: Todo
-  todos: Todo[]
-  setTodos: Dispatch<SetStateAction<Todo[]>>
-
 }
-const TodoItem = ({ todoItem, todos, setTodos }: TodoItemProps) => {
+const TodoItem = ({ todoItem }: TodoItemProps) => {
+  const [todos, setTodos] = useRecoilState(todosState);
 
   const editingInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
@@ -47,7 +47,7 @@ const TodoItem = ({ todoItem, todos, setTodos }: TodoItemProps) => {
   }, [editingTodo]);
 
   return (
-    <li key={todoItem.id} >
+    <li>
       {editingTodo !== todoItem ? (
         <>
           <input type="checkbox" checked={todoItem.completed} onChange={() => completeTodoToggle(todoItem)} />
