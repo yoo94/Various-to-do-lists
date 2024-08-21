@@ -1,19 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
+import { useAppDispatch } from "../app/hooks";
+import { _allCompletedToggle, _dleteCompletedTodos } from "../features/todos/todosSilce";
 import Button from "./Button";
-import { Todo } from './types/Todo';
 
-interface FooterProps {
-  todos: Todo[],
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
-}
-
-const Footer = ({ todos, setTodos }: FooterProps) => {
+//todos={todos} setTodos={setTodos} 
+const Footer = () => {
+  const FooterDispatch = useAppDispatch();
   const allCompletedToggle = () => {
-    const allChecked = todos.every(todo => todo.completed);
-    setTodos(todos.map(todo => ({ ...todo, completed: !allChecked })))
+    FooterDispatch(_allCompletedToggle())
   }
   const dleteCompletedTodos = () => {
-    setTodos(todos.filter(todo => !todo.completed))
+    FooterDispatch(_dleteCompletedTodos())
   }
   return (
     <>
